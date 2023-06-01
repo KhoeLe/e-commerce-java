@@ -17,9 +17,9 @@ public class ProductServices {
     @Autowired ProductRepository repo;
 
 
-    public ResponseEntity<List<Product>> findAll(){
+    public List<Product> findAll(){
 
-        return ResponseEntity.ok().body(repo.findAll());
+        return repo.findAll();
     }
 
     public ResponseEntity<Product> create(Product product){

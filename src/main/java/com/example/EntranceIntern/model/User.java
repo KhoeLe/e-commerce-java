@@ -8,37 +8,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "products")
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Product {
-
+@Entity
+@Table(name = "users")
+public class User  {
+    
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     Integer id;
 
-    @Column(nullable = false, length = 128)
+    @Email
+    @Column(nullable = false, length = 128, unique = true)
     @NotNull() @Length(min = 5, max = 128)
-    String name;
+    String email;
 
 
-    String images;
-
-    @Column(nullable = false)
-    // @Length(min = 0, max = 9999)
-    @NotNull()
-    Float price;
-
-    @Column(nullable = false, length = 9999)
-    String description;
-
-    
+    @Column(nullable = false, length = 128)
+    @NotNull() @Length(min = 6, max = 128)
+    String password;
 }
