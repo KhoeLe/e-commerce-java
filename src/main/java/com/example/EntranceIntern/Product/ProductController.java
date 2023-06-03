@@ -1,4 +1,4 @@
-package com.example.EntranceIntern.controller;
+package com.example.EntranceIntern.Product;
 
 import java.util.List;
 
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.EntranceIntern.model.Product;
-import com.example.EntranceIntern.services.ProductServices;
-
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,8 +24,6 @@ public class ProductController {
     
 
     @Autowired ProductServices productService;
-
-  
 
     @PostMapping
     public ResponseEntity<Product> create(@RequestBody @Valid Product product){

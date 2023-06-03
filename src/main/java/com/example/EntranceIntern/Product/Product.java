@@ -1,4 +1,4 @@
-package com.example.EntranceIntern.model;
+package com.example.EntranceIntern.Product;
 
 import org.hibernate.validator.constraints.Length;
 

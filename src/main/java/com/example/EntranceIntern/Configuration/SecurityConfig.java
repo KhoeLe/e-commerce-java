@@ -1,4 +1,4 @@
-package com.example.EntranceIntern.config;
+package com.example.EntranceIntern.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

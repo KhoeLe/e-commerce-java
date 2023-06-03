@@ -1,4 +1,4 @@
-package com.example.EntranceIntern.services;
+package com.example.EntranceIntern.Product;
 
 import java.net.URI;
 import java.util.List;
@@ -6,9 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.example.EntranceIntern.model.Product;
-import com.example.EntranceIntern.repository.ProductRepository;
 
 @Service
 public class ProductServices {

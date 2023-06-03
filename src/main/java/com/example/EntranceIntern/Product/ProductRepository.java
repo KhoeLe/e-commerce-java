@@ -1,9 +1,7 @@
-package com.example.EntranceIntern.repository;
+package com.example.EntranceIntern.Product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.example.EntranceIntern.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
