@@ -28,14 +28,14 @@ public class ProductServices {
         return ResponseEntity.created(uri).body(product);
     }
 
-    public ResponseEntity<Product> findById(Integer id){
+    public ResponseEntity<Product> findById(Long id){
 
         Product product = repo.findById(id).get();
 
         return ResponseEntity.ok(product);
     }
 
-    public ResponseEntity<Product> update(Integer id, Product product){
+    public ResponseEntity<Product> update(Long id, Product product){
 
         Product newProduct = repo.findById(id).get();
 
@@ -47,7 +47,7 @@ public class ProductServices {
         return ResponseEntity.ok(newProduct);
     }
 
-    public ResponseEntity<Product> delete(Integer id){
+    public ResponseEntity<Product> delete(Long id){
 
         Product product = repo.findById(id).get();
 

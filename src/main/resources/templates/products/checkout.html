@@ -8,15 +8,152 @@
   <head>
     <meta charset="UTF-8" />
     <title>Apple Store - Check Out</title>
-    
   </head>
 
   <body>
     <div layout:fragment="content" class="container body-content">
+      <div>
+        <a>
+          Welcome to
+          <span th:text="${userWhoOrdered.email}"></span>
+        </a>
+
         <div>
-            <h1>CHECKOUT</h1>
+          <div class="card" style="width: 25rem">
+            <!-- dynamic show  cartItemHTML -->
+            <div class="card-container"></div>
+            <button id="payment" class="btn btn-outline-warning mt-auto">
+              Payment
+            </button>
+          </div>
         </div>
+      </div>
     </div>
   </body>
 </html>
-<script></script>
+<script>
+  $(document).ready(function () {
+    getProductDetail();
+    // handlePayment()
+
+    function getProductDetail() {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const globalCart = JSON.parse(localStorage.getItem("globalCart")) || [];
+      if (cartItems.length === 0) return;
+      let totalPrice = 0;
+
+      const cartContainer = $(".card-container");
+      cartContainer.empty(); // Clear the cart container
+
+      globalCart.forEach((item, index) => {
+        const cartItemHTML = `
+                    <div class="card-body">
+                      <h5 class="card-title">${item.name}</h5>
+                        <div class="d-flex justify-content-between">
+                          <div class="col-md-4">
+                            <img id="cart-image" src=${item.images} class="img-fluid rounded-start" alt="" />
+                          </div>
+                          <div>
+                            <p class="card-text text-red">Quantity ${item.quantity} :
+                              <span class="ard-text"  >
+                               ${item.price} / $
+                              </span>
+                            </p>
+                          </div>      
+                        </div>
+                    </div>
+                    
+                `;
+
+        totalPrice += item.price * item.quantity;
+
+        cartContainer.append(cartItemHTML);
+      });
+
+      const totalPriceHTML = `
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <p class="card-text text-red">Total Quantity: ${cartItems.length}</p>
+                      <p class="card-text text-red">Total Price: <span style="color: red;">${totalPrice} / $</span></p>
+                    </div>
+                  </div>
+                </div>
+              `;
+      cartContainer.append(totalPriceHTML);
+    }
+
+    $("#payment").on("click", function () {
+      var globalCart = JSON.parse(localStorage.getItem("globalCart")) || [];
+
+      var dataRequest = [];
+      $.each(globalCart, function (index, item) {
+        dataRequest.push({
+          quantity: item.quantity,
+          productId: item.id,
+        });
+      });
+
+      console.log(dataRequest);
+
+     
+
+      $.ajax({
+        type: "POST",
+        url: "/api/v1/order/cart",
+        data: JSON.stringify(dataRequest),
+        contentType: "application/json; charset=utf-8",
+        dataType: "text",
+        success: function (data) {
+          console.log("success",data.status);
+          localStorage.removeItem("globalCart");
+          localStorage.removeItem("cartItems");
+          window.location.href = "/order/cart/completed";
+        },
+        error: function (xhr, status, error) {
+          console.log(error);
+        },
+      });
+    });
+
+    //   function handlePayment(){
+    //     const globalCart = JSON.parse(localStorage.getItem("globalCart")) || [];
+
+    //     let dataRequest = []
+    //    globalCart.forEach((item, index) => {
+    //     dataRequest.push({
+    //       quantity: item.quantity,
+    //       productId: item.id,
+    //     });
+    //    })
+    //     console.log(dataRequest)
+
+    //     // TODO: When order page completed remove localStorage and redirect to completed page
+
+    //     // call API  order/cart/completed using ajax
+
+    //     // debugger
+    //    $.ajax
+    //     ({
+    //       type: "POST",
+    //       url: "/api/v1/order/cart",
+    //       data: JSON.stringify(globalCart),
+    //       contentType: "application/json; charset=utf-8",
+    //       dataType: "json",
+    //       success: function (data) {
+    //         console.log(data);
+    //         localStorage.removeItem("globalCart");
+    //         localStorage.removeItem("cartItems");
+    //       },
+    //       failure: function (errMsg) {
+    //         console.log(errMsg);
+    //       },
+    //     });
+
+    //     $('#payment').on("click", function ( ){
+    //       window.location.href = "/order/cart/completed"
+    //     })
+
+    //   }
+  });
+</script>

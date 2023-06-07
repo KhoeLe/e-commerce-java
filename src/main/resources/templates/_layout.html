@@ -33,23 +33,23 @@
               <button class="btn btn-outline-info" type="submit">Search</button>
             </form>
 
-            <ul class="m-auto me-5">
-               <a href="/cart">
+            <ul class="m-auto me-5 ">
+               <a href="/order/cart">
                     <img src="https://cdn3d.iconscout.com/3d/premium/thumb/cart-5590712-4652404.png" alt="" srcset="" style="max-width: 45px; height: auto;">
                     <span id="cart-count"></span>
                 </a>
-
-                <div class="navbar-brand bg-dark ms-auto">
-                  <span sec:authorize="isAuthenticated()">
-                      <span sec:authentication="name"></span> |||
-
-                      <a sec:logout th:href="@{/logout}" class="text-white">Logout</a>
-
+      
+                    <span sec:authorize="isAuthenticated()">
+                      <span sec:authentication="name"></span> |
+    
+                      <a sec:logout th:href="@{/logout}" class="text-black ms-auto">Logout</a>
+    
                       Roles: <span sec:authentication="principal.authorities"></span>
                   </span>
                  <span sec:authorize="!isAuthenticated()">
-                      <a sec:authorize="isAnonymous()" th:href="@{/login}" class="text-white">Login</a>
+                      <a sec:authorize="isAnonymous()" th:href="@{/login}" class="text-black ms-auto">Login</a>
                   </span>
+                
              </div>
             </ul>
           </div>

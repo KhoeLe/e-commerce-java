@@ -1,105 +1,130 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="_layout"
-  xmlns:custom="http://www.w3.org/1999/xhtml"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>Apple Store - Cart</title>
-    <style>
-      #cart-price{
-        color: red;
-      }
-      /* .cart-template{
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout"
+  xmlns:custom="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Apple Store - Cart</title>
+  <style>
+    #cart-price {
+      color: red;
+    }
+
+    /* .cart-template{
         display: flex;
         justify-content: space-between;
       } */
-    
-      </style>
-  </head>
+  </style>
+</head>
 
 
-  <body>
-    <div layout:fragment="content" class="container body-content">
-      <!-- <div class="card-body-container"> -->
-        <a href="/"> Go Back</a>
-        <h1>Cart Items</h1>
-        <div class="d-flex mt-auto justify-content-between ">
-          <div class=" card-body-container">
-            <div class="card mb-3 cart-template" style="max-width: 440px">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img
-                    id="cart-image"
-                    src=""
-                    class="img-fluid rounded-start"
-                    alt=""
-                  />
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 id="cart-title" class="card-title"></h5>
-                    <p id="cart-description" class="card-text"></p>
-                    <div class="d-flex mt-auto justify-content-between">
-                     
-                      <p id="cart-quality" class="card-text">
-                        <small class="" ></small>
-                      </p>
-  
-                      <p id="cart-price" class="card-text">
-                        <small class="text-danger "></small>
-                      </p>
-                    </div>
+<body>
+  <div layout:fragment="content" class="container body-content">
+    <!-- <div class="card-body-container"> -->
+    <a href="/"> Go Back</a>
+    <h1>Cart Items</h1>
+    <form action="" >
+      <div class="d-flex mt-auto justify-content-between ">
+        <div class=" card-body-container">
+          <div class="card mb-3 cart-template" style="max-width: 440px">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img id="cart-image" src="" class="img-fluid rounded-start" alt="" />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 id="cart-title" class="card-title"></h5>
+                  <p id="cart-description" class="card-text"></p>
+                  <div class="d-flex mt-auto justify-content-between">
+
+                    <p id="cart-quality" class="card-text">
+                      <small class=""></small>
+                    </p>
+
+                    <p id="cart-price" class="card-text">
+                      <small class="text-danger "></small>
+                    </p>
                   </div>
-                  
                 </div>
+
               </div>
             </div>
           </div>
-
-          <div class="">
-            <button type="button" class="btn btn-outline-primary">
-              PROCEED TO CHECKOUT
-            </button>
-            <a href="/" type="button" class="btn btn-outline-secondary"
-              >CHOICE NEW PRODUCT</a
-            >
-          </div>
         </div>
-    </div>
-  </body>
+
+
+        <div class="">
+          <a id="checkoutButton" class="btn btn-outline-primary">
+            PROCEED TO CHECKOUT
+        </a>
+          <a href="/" type="button" class="btn btn-outline-secondary">CHOICE NEW PRODUCT</a>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</body>
+
 </html>
 <script>
+
   $(document).ready(function () {
     getProductDetail();
 
     function getProductDetail() {
       const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-      if (cartItems.length === 0) return;
+      
+
+      // if (cartItems.length === 0) return;
+
 
       const cartItemMap = new Map();
       const uniqueCartItems = [];
 
-    cartItems.forEach((item, index) => {
-      const itemId = item.id;
-      if (cartItemMap.has(itemId)) {
-        cartItemMap.set(itemId, cartItemMap.get(itemId) + 1);
-      } else {
-        cartItemMap.set(itemId, 1);
-        uniqueCartItems.push(item);
-      }
-    });
+      cartItems.forEach((item, index) => {
+        const itemId = item.id;
+        if (cartItemMap.has(itemId)) {
+          cartItemMap.set(itemId, cartItemMap.get(itemId) + 1);
+        } else {
+          cartItemMap.set(itemId, 1);
+          uniqueCartItems.push(item);
+        }
+      });
 
-     
+      const itemsCartUnique = [] 
+      uniqueCartItems.forEach((item, index) => {
+        const itemId = item.id;
+        const quantity = cartItemMap.get(itemId);
+        
+        itemsCartUnique.push({
+          name: item.name,
+          price: item.price,
+          images: item.images,
+          id: itemId,
+          quantity: quantity
+        })
+      });
+      
+      const GlobalCart = localStorage.setItem("globalCart", JSON.stringify(itemsCartUnique));
 
       const description = `Comprehensive product protection with extended warranty service
                         (Customers register for information to receive the fastest in-store consulting and payment support, the amount to be paid does not include the value of the extended warranty package)`;
 
-       // Use uniqueCartItems for further processing or display in cart.html
+      // Use uniqueCartItems for further processing or display in cart.html
       // Update UI
       const cartContainer = $(".card-body-container");
+
+      if(cartItems.length === 0 ){
+        
+        const cardClone = cartContainer.find(".cart-template").clone(); // Clone the template element
+        cardClone.find("#cart-title").text("No items in cart");
+        cartContainer.find(".cart-template").remove()
+        cardClone.removeClass("cart-template"); // Remove the "cart-template" class from the clone
+        cartContainer.append(cardClone);
+        return;
+      }
+
       const cartTemplate = $(".cart-template"); // Store the template element
       cartContainer.find(".cart-template").remove(); // Remove existing cart-template elements
 
@@ -117,30 +142,23 @@
         cardClone.removeClass("cart-template"); // Remove the "cart-template" class from the clone
         cartContainer.append(cardClone);
       });
-
-      
     }
 
-    // Add click event listener to "PROCEED TO CHECKOUT" button
-    $(".btn-outline-primary").on("click", function() {
-      const isLoggedIn = checkUserLoginStatus(); // Check user login status
+    $("#checkoutButton").on("click", function(){
+      // redirect to checkout page
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-      // if (isLoggedIn) {
-      //   // User is logged in, redirect to checkout page
-        window.location.href = "cart/checkout";
-      // } else {
-      //   // User is not logged in, redirect to login page
-      //   window.location.href = "/login";
-      // }
-    });
-  
-    function checkUserLoginStatus(){
-      const isLoggedIn = false;
-      return isLoggedIn;
-    }
+      if(cartItems.length === 0 ){
+        alert("No items in cart");
+        window.location.href = "/";
+        return
+      }
+
+      window.location.href = "checkout/confirm";
+
+    })
 
 
+});
 
-
-  });
 </script>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="_layout"
+  xmlns:custom="http://www.w3.org/1999/xhtml"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Apple Store - Order Completed</title>
+    
+  </head>
+
+  <body>
+    <div layout:fragment="content" class="container body-content">
+      <a > Welcome to 
+        <span th:text="${userWhoOrdered.email}"></span>
+      </a>
+        <h1>
+             Order Completed page
+        </h1>
+    </div>
+  </body>
+</html>
+<script>
+    $(document).ready(function () {
+        getProductDetail();
+
+    
+    });
+
+</script>

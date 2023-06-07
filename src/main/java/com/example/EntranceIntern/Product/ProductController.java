@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable Integer id, @RequestBody @Valid Product product){
+    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody @Valid Product product){
         try {
             return productService.update(id, product);
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class ProductController {
     // }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Integer id){
+    public ResponseEntity<Product> findById(@PathVariable Long id){
         try {
             return productService.findById(id);
         } catch (Exception e) {

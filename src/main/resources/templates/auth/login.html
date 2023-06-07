@@ -11,7 +11,6 @@
 <body>
   <div layout:fragment="content" class="container body-content">
     <div>
-      <h1>Login</h1>
       <h1>Please Log In</h1>
       <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
         <div th:if="${param.error}">

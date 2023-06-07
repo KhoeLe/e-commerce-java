@@ -3,14 +3,10 @@ package com.example.EntranceIntern.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,22 +41,24 @@ public class SecurityConfig {
 
 	private static final String[] PUBLIC_WHITELIST = {
         "/",
-		"/cart",
 		"/login",
 		"/logout",
+		"/order/cart",
+		"/api/v1/order/cart"
+		
+		// "/cart/checkout/",
+		// "/cart/checkout/confirm"
 	};	
 
 	private static final String[] AUTH_WHITELIST = {
-        "/",
-		"/cart",
-		"/cart/checkout",
+     	"order/cart/checkout",
+		"/order/cart/completed"
 	};	
 	private static final String[] ADMIN_WHITELIST = {
-        "/",
-		"/cart",
-		"/cart/checkout",
+		"order/cart/checkout",
+		"/order/cart/completed",
 		"/products/update",
-		"/products/create"
+		"/products/create",
 	};	
 
 
@@ -75,7 +73,7 @@ public class SecurityConfig {
 				.requestMatchers(AUTH_WHITELIST).hasAnyAuthority("ADMIN", "USER")  
 				.requestMatchers(ADMIN_WHITELIST).hasAnyAuthority("ADMIN")      // cart/checkout 
 				.anyRequest().authenticated()     
-			// 	// .anyRequest().permitAll()  
+				// .anyRequest().permitAll()  
 			)
 			.formLogin(formLogin -> formLogin
                 .loginPage("/login")
