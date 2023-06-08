@@ -19,35 +19,40 @@ public class ProductServices {
         return repo.findAll();
     }
 
-    public ResponseEntity<Product> create(Product product){
+    public Product create(Product product){
 
-        Product newProduct = repo.save(product);
+        return repo.save(product);
+       
 
-        URI uri = URI.create("http://localhost:8080/api/v1/products/" + newProduct.getId());
-        
-        return ResponseEntity.created(uri).body(product);
+        // URI uri = URI.create("http://localhost:8080/api/v1/products/" + newProduct.getId());                
     }
 
-    public ResponseEntity<Product> findById(Integer id){
+    public Product  findById(Long id){
 
         Product product = repo.findById(id).get();
 
-        return ResponseEntity.ok(product);
+        return product;
+        
     }
 
-    public ResponseEntity<Product> update(Integer id, Product product){
+    public Product update(Product product){
 
-        Product newProduct = repo.findById(id).get();
+         Product find = findById(product.getId());
+        // Product newProduct = repo.findById(id).get();
+        if(find != null){
+             find.setName(product.getName());
+            find.setPrice(product.getPrice());
 
-        newProduct.setName(product.getName());
-        newProduct.setPrice(product.getPrice());
+        }
+       return repo.save(find);
 
-        repo.save(newProduct);
-
-        return ResponseEntity.ok(newProduct);
     }
 
-    public ResponseEntity<Product> delete(Integer id){
+    private Product get(Long id) {
+        return null;
+    }
+
+    public ResponseEntity<Product> delete(Long id){
 
         Product product = repo.findById(id).get();
 

@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +22,7 @@ public class Product {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    Integer id;
+    Long id;
 
     @Column(nullable = false, length = 128)
     @NotNull() @Length(min = 5, max = 128)
@@ -40,5 +39,6 @@ public class Product {
     @Column(nullable = false, length = 9999)
     String description;
 
+  
     
 }

@@ -18,7 +18,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model){
         model.addAttribute("list_product", productService.findAll()) ;
-       return "products/index.html";
+       return "home/index.html";
     }
 
     

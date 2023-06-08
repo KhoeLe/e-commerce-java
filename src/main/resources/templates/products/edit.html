@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout"
+    xmlns:custom="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Apple Store - Product Edit</title>
+
+</head>
+
+
+<body>
+    <div layout:fragment="content" class="container body-content">
+        <h1>Product Edit</h1>
+
+        <!-- <div th:each="product : ${product}">
+                    <p th:text="${product}"></p>
+                </div> -->
+
+        <hr>
+        
+        <div class="row justify-content-start ">
+            <form th:object="${product}" th:each="product : ${product}" enctype="multipart/form-data"
+                th:action="@{/admin/products/{id}(id=${product.id})}" id="updateForm" method="put" class="col g-3">
+
+                <div class="col-md-4 p-2 m-2">
+                    <label for="inputEmail4" class="form-label">Name</label>
+                    <input type="text" class="form-control" th:field="*{name}" name="name" id="name">
+                </div>
+
+                <div class="col-md-4 p-2 m-2">
+                    <label for="inputEmail4" class="form-label">Price</label>
+                    <!-- <label class="visually-hidden" for="specificSizeInputGroupUsername">Price</label> -->
+                    <div class="input-group">
+                        <input class="form-control" th:value="*{price}" type="text" name="price" id="price"
+                            placeholder="Price">
+                        <div class="input-group-text">$</div>
+                    </div>
+                </div>
+
+                <div class="form-floating col-md-4 p-2 m-2">
+                    <textarea class="form-control" placeholder="Leave a description here"
+                    th:value="*{description}" type="text" name="description" id="description" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">description</label>
+                </div>
+
+                <div class=" col-md-4 p-2 m-2">
+                    <label th:src="@{/images/} + *{images}" class="form-label">Image</label>
+                    <input class="form-control" type="file" id="image" name="imageProduct"
+                        accept="image/png, image/jpeg" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                </div>
+
+                <div class="col-12  p-2 m-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                     <a  href="/admin/products" class="btn btn-primary">Back</a>
+                   
+                </div>
+
+               
+            </form>
+
+        </div>
+
+
+
+
+
+
+    </div>
+    </div>
+</body>
+
+</html>
+<script>
+    $(document).ready(function () {
+
+        $("#updateForm").submit(function (event) {
+
+
+            event.preventDefault(); // ngăn chặn form submit bình thường
+            const form = $(this);
+            const url = form.attr('action');
+
+            const notifySuccess = Toastify({
+                text: "Update Success",
+                duration: 2000,
+                destination: "/admin/products",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                onClick: function () { } // Callback after click
+            }).showToast();
+
+
+
+
+            $.ajax({
+                type: "PUT",
+                url: url,
+                contentType: false, // Set content type to false for multipart
+                processData: false,
+                data: new FormData(form[0]), // lấy dữ liệu từ form
+                success: function (data) {
+                    // xử lý kết quả trả về từ server
+                    
+                        setTimeout(function () {
+                        notifySuccess
+                        window.location.href = "/admin/products";
+                    }, 1000);
+                   
+ 
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+
+                }
+            });
+        });
+
+
+    });
+
+
+
+</script>

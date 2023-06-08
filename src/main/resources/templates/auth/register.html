@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="_layout"
+  xmlns:custom="http://www.w3.org/1999/xhtml"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Apple Store - Register</title>
+    
+  </head>
+
+  <body>
+    <div layout:fragment="content" class="container body-content">
+      <!-- th:object="${user}" -->
+          <h1>Registration</h1>
+          <form th:action="@{/register}" method="post" th:object="${userDto}">
+              
+                <div class="col-md-4 p-2 m-2 ">
+                  <label for="" class="form-label">User Name</label>
+                  <input type="text" class="form-control" th:value="*{username}" name="username" id="username" aria-describedby="emailHelpId" placeholder="user name">
+                </div>
+
+              <div class="col-md-4 p-2 m-2">
+                <label for="" class="form-label">Email</label>
+                <input type="email" class="form-control" th:value="*{email}" name="email" id="email" aria-describedby="emailHelpId" placeholder="abc@mail.com">
+              </div>
+
+              <div class=" col-md-4 p-2 m-2">
+                <label for="" class="form-label">Password</label>
+                <input type="password" class="form-control" th:value="*{password}" name="password" id="password" placeholder="Password">
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-outline-primary p2 m-2">Continue</button>
+              </div>
+          </form>
+       
+    </div>
+  </body>
+</html>
+<script></script>
