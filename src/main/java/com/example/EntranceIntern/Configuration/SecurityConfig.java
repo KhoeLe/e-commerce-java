@@ -41,13 +41,11 @@ public class SecurityConfig {
 
 	private static final String[] PUBLIC_WHITELIST = {
         "/",
+		"/register",
 		"/login",
 		"/logout",
 		"/order/cart",
 		"/api/v1/order/cart"
-		
-		// "/cart/checkout/",
-		// "/cart/checkout/confirm"
 	};	
 
 	private static final String[] AUTH_WHITELIST = {
@@ -57,8 +55,8 @@ public class SecurityConfig {
 	private static final String[] ADMIN_WHITELIST = {
 		"order/cart/checkout",
 		"/order/cart/completed",
-		"/products/update",
-		"/products/create",
+		"admin/products",
+		"order/cart/all"
 	};	
 
 
@@ -82,6 +80,7 @@ public class SecurityConfig {
                 .failureUrl("/login?error")
 				.permitAll()
             )
+			
 			.logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
