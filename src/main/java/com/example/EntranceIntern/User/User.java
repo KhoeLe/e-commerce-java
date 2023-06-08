@@ -43,6 +43,7 @@ public class User  {
     String email;
 
 
+  
     @Column(nullable = false, length = 128)
     @NotNull() @Length(min = 6, max = 128)
     String password;
@@ -52,5 +53,6 @@ public class User  {
     @JoinTable(name = "UserRole",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+
     private Set<Role> roles = new HashSet<>();
 }
