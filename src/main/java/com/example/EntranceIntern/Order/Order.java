@@ -1,6 +1,5 @@
 package com.example.EntranceIntern.Order;
 
-
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -29,14 +28,12 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    Float totalPrice; 
+    Float totalPrice;
 
-  
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-  
     // create date and update time
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -47,6 +44,11 @@ public class Order implements Serializable {
     public void setOrderItems(List<OrderItem> orderItemList) {
     }
 
+    @Override
+    public String toString() {
+        return "Order [createDate=" + createDate + ", id=" + id + ", totalPrice=" + totalPrice + ", updateDate="
+                + updateDate + ", userId=" + (user != null ? user.getId() : null) + ", username="
+                + (user != null ? user.getUsername() : null) + "]";
+    }
 
 }
-

@@ -18,6 +18,8 @@
           <span th:text="${userWhoOrdered.email}"></span>
         </a>
 
+        <hr>
+
         <div>
           <div class="card" style="width: 25rem">
             <!-- dynamic show  cartItemHTML -->
@@ -94,7 +96,20 @@
         });
       });
 
-      console.log(dataRequest);
+      const notifySuccess =  Toastify({
+                text: "Payment Success",
+                duration: 2000,
+                destination: "/order/cart",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+            onClick: function(){} // Callback after click
+            }).showToast();
 
      
 
@@ -108,7 +123,12 @@
           console.log("success",data.status);
           localStorage.removeItem("globalCart");
           localStorage.removeItem("cartItems");
-          window.location.href = "/order/cart/completed";
+
+          setTimeout(function(){
+            notifySuccess
+            window.location.href = "/order/cart/completed";
+          }, 1000);
+          
         },
         error: function (xhr, status, error) {
           console.log(error);
@@ -116,44 +136,6 @@
       });
     });
 
-    //   function handlePayment(){
-    //     const globalCart = JSON.parse(localStorage.getItem("globalCart")) || [];
-
-    //     let dataRequest = []
-    //    globalCart.forEach((item, index) => {
-    //     dataRequest.push({
-    //       quantity: item.quantity,
-    //       productId: item.id,
-    //     });
-    //    })
-    //     console.log(dataRequest)
-
-    //     // TODO: When order page completed remove localStorage and redirect to completed page
-
-    //     // call API  order/cart/completed using ajax
-
-    //     // debugger
-    //    $.ajax
-    //     ({
-    //       type: "POST",
-    //       url: "/api/v1/order/cart",
-    //       data: JSON.stringify(globalCart),
-    //       contentType: "application/json; charset=utf-8",
-    //       dataType: "json",
-    //       success: function (data) {
-    //         console.log(data);
-    //         localStorage.removeItem("globalCart");
-    //         localStorage.removeItem("cartItems");
-    //       },
-    //       failure: function (errMsg) {
-    //         console.log(errMsg);
-    //       },
-    //     });
-
-    //     $('#payment').on("click", function ( ){
-    //       window.location.href = "/order/cart/completed"
-    //     })
-
-    //   }
+    
   });
 </script>
