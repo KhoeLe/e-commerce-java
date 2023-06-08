@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout"
+  xmlns:custom="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Apple Store - Product Create</title>
+
+</head>
+
+
+<body>
+  <div layout:fragment="content" class="container body-content">
+
+    <!-- <div th:each="product : ${productList}">
+            <p  th:text="${product}"></p>
+        </div> -->
+
+    <h1>Product Create</h1>
+
+    <hr>
+
+    <div class="btn-group " role="group" aria-label="">
+      <a href="/admin/products/create" class=" btn btn-outline-primary ">Create</a>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4  justify-content-start ">
+
+      <div th:each="product : ${productList}" class="row justify-content-center p-2 m-2 ">
+
+        <div class="card mb-3" style="max-width: 24rem;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img style="max-width: 110px; margin-top: 80px;" th:src="${product.images}"
+                class="img-fluid rounded-start" alt="">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title" th:text="${product.name}"></h5>
+                <p class="card-text text-wap" th:text="${product.description}"></p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <a th:href="@{/admin/products/{id}(id=${product.id})}" class="card-link btn btn-outline-primary ">
+                  Update </a>
+                  
+                <form th:action="@{/admin/products/{id}(id=${product.id})}" method="post" id="removeProduct">
+                  <button type="submit" class="card-link btn btn-outline-danger p-2 m-2">Delete</button>
+                </form>
+
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
+<script>
+
+</script>
