@@ -139,7 +139,7 @@
         const quantity = cartItemMap.get(itemId);
         cardClone.find("#cart-quality").text("Quantity: " + quantity);
 
-        cardClone.find("#cart-price").text(item.price + ' $');
+        cardClone.find("#cart-price").text(item.price * quantity + ' $');
         cardClone.removeClass("cart-template"); // Remove the "cart-template" class from the clone
         cartContainer.append(cardClone);
       });
